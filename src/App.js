@@ -4,6 +4,7 @@ import './App.css';
 import Home from './page/Home';
 import Random from './page/Random';
 import NotFound from './page/NotFound';
+import Todo from './page/Todo';
 import { useEffect, useState } from 'react';
 import { UserContext } from './context/UserContext';
 
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path='/' index element={<Home/>}/>
         <Route path='/random' element={<Random/>}/>
+        <Route path='/todo' element={<Todo/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
     </UserContext.Provider>
