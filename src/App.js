@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Home from './page/Home';
+import Random from './page/Random';
+import NotFound from './page/NotFound';
+import { useEffect, useState } from 'react';
+import { UserContext } from './context/UserContext';
 
 function App() {
+  const [dados, setDados] = useState();
+  function Atualizar(){
+    fetch('https://randomuser.me/api')
+    .then((res) => res.json())
+    .then((dados) => {
+      setDados(dados.results[0])
+    })
+  }
+
+  useEffect(() => {
+    Atualizar();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={dados}>
+      <Routes>
+        <Route path='/' index element={<Home/>}/>
+        <Route path='/random' element={<Random/>}/>
+        <Route path='*' element={<NotFound/>}/>
+      </Routes>
+    </UserContext.Provider>
   );
 }
 
